@@ -1,5 +1,10 @@
 import { useMemo, useState } from 'react';
-import { useFilters, useGlobalFilter, useSortBy, useTable } from 'react-table';
+import {
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+  useTable,
+} from 'react-table';
 
 const Table = ({ data }: { data: any[] }) => {
   const columns = useMemo(
@@ -11,6 +16,11 @@ const Table = ({ data }: { data: any[] }) => {
     [],
   );
 
+  const initialState = {
+    pageSize: 5,
+    pageIndex: 0,
+  };
+
   const {
     getTableProps, // table props from react-table
     getTableBodyProps, // table body props from react-table
@@ -18,13 +28,24 @@ const Table = ({ data }: { data: any[] }) => {
     rows, // rows for the table based on the data passed
     prepareRow, // Prepare the row (this function needs to be called for each row before getting the row props)
     setGlobalFilter,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
       data,
+      initialState,
     },
     useGlobalFilter,
     useSortBy,
+    usePagination,
   );
 
   // Create a state
@@ -98,7 +119,7 @@ const Table = ({ data }: { data: any[] }) => {
                     {...getTableBodyProps()}
                     className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900"
                   >
-                    {rows.map((row, i) => {
+                    {page.map((row, i) => {
                       prepareRow(row);
                       return (
                         <tr {...row.getRowProps()}>
@@ -126,14 +147,15 @@ const Table = ({ data }: { data: any[] }) => {
           <div className="text-sm text-gray-500 dark:text-gray-400">
             Page{' '}
             <span className="font-medium text-gray-700 dark:text-gray-100">
-              1 of 10
+              {pageIndex + 1} of {pageOptions.length}
             </span>
           </div>
 
           <div className="mt-4 flex items-center gap-x-4 sm:mt-0">
-            <a
-              href="#"
-              className="flex w-1/2 items-center justify-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800 sm:w-auto"
+            <button
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+              className="flex w-1/2 items-center justify-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800 sm:w-auto"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -151,11 +173,12 @@ const Table = ({ data }: { data: any[] }) => {
               </svg>
 
               <span>previous</span>
-            </a>
+            </button>
 
-            <a
-              href="#"
-              className="flex w-1/2 items-center justify-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800 sm:w-auto"
+            <button
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+              className="flex w-1/2 items-center justify-center gap-x-2 rounded-md border bg-white px-5 py-2 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800 sm:w-auto"
             >
               <span>Next</span>
 
@@ -173,7 +196,7 @@ const Table = ({ data }: { data: any[] }) => {
                   d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
                 />
               </svg>
-            </a>
+            </button>
           </div>
         </div>
       </section>
