@@ -1,12 +1,34 @@
-# vite React TypeScript tailwindcss starter
-
-Template for vite, React + tailwindcss + TypeScript projects with some tools preconfigured.
-
 ## About
 
-Template for vite, React + tailwindcss + TypeScript projects with some tools preconfigured.
+A simple React application that generates random values every 15 seconds and displays them in a graph and table, along with the time they were generated. The project also includes login and registration with basic form validation.
 
-![Screenshot](assets/screenshot.png)
+Generator page:
+
+![Alt text](assets/image.png)
+
+Table:
+
+![Alt text](assets/image-1.png)
+
+## Setup
+
+If you don't have yarn installed you need to execute `npm i -g yarn` before setup:
+
+create .env file inside project root directory and set `VITE_TOKEN=''` variable with your API token
+
+install dependences:
+
+```bash
+yarn
+```
+
+run application on localhost:
+
+```bash
+yarn dev
+```
+
+
 
 ### Libraries
 
@@ -16,26 +38,8 @@ Template for vite, React + tailwindcss + TypeScript projects with some tools pre
   - [tailwindcss forms plugin](https://tailwindcss-forms.vercel.app/)
 - [TypeScript 4.9.5](https://www.typescriptlang.org/)
 - [vite 4](https://vitejs.dev/)
-- [vitetest](https://vitest.dev/)
+- redux
+- visx
+- react hook form
+- zod
 
-### Tools
-
-- [commitlint 17](https://commitlint.js.org)
-- [Conventional Commits 1](https://www.conventionalcommits.org)
-- [editorconfig](https://editorconfig.org/)
-- [eslint 8](https://eslint.org/)
-- [husky 8](https://typicode.github.io/husky/#/)
-- [Prettier 2](https://prettier.io/)
-- [VS Code settings](https://code.visualstudio.com/)
-
-## Usage
-
-Create a new project from this template by clicking the "Use this template" button:
-
-![](assets/template-usage.png)
-
-```bash
-yarn
-yarn dev
-yarn test
-```
