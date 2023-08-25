@@ -1,0 +1,65 @@
+import {
+  AnimatedAxis,
+  AnimatedGrid,
+  AnimatedLineSeries,
+  XYChart,
+  Tooltip,
+} from '@visx/xychart';
+
+const accessors = {
+  xAccessor: (d: any) => d.x,
+  yAccessor: (d: any) => d.y,
+};
+
+const LineChart = ({
+  data,
+}: {
+  data: {
+    x: string;
+    y: number;
+  }[];
+}) => {
+  return (
+    <div className="overflow-x-scroll">
+      <div className="w-[1800px] overflow-x-scroll">
+        <XYChart
+          height={300}
+          xScale={{ type: 'band' }}
+          yScale={{ type: 'linear' }}
+        >
+          <AnimatedAxis orientation="bottom" />
+          <AnimatedGrid columns={false} numTicks={4} />
+          <AnimatedLineSeries
+            dataKey="Line 1"
+            data={data.length === 0 ? [{ x: 0, y: 0 }] : data}
+            {...accessors}
+          />
+          <Tooltip
+            snapTooltipToDatumX
+            snapTooltipToDatumY
+            showVerticalCrosshair
+            showSeriesGlyphs
+            renderTooltip={({ tooltipData, colorScale }) => (
+              <div>
+                <div
+                  style={
+                    colorScale && {
+                      color: colorScale(tooltipData?.nearestDatum?.key ?? ''),
+                    }
+                  }
+                >
+                  {tooltipData?.nearestDatum?.key}
+                </div>
+                {accessors.xAccessor(tooltipData?.nearestDatum?.datum)}
+                {', '}
+                {accessors.yAccessor(tooltipData?.nearestDatum?.datum)}
+              </div>
+            )}
+          />
+        </XYChart>
+      </div>
+    </div>
+  );
+};
+
+export default LineChart;

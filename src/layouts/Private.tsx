@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { config } from '../App';
-import MainNav from '../components/MainNav';
 
 const Private = () => {
   const navigate = useNavigate();
@@ -18,12 +17,8 @@ const Private = () => {
   }
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col px-10">
-      <div className="flex-1">
-        <div className="container flex-1">
-          <Outlet />
-        </div>
-      </div>
+    <div className="w-full">
+      <Outlet />
     </div>
   );
 };

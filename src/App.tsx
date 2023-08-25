@@ -1,6 +1,6 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import loadable from '@loadable/component';
-import React, { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { Provider } from 'react-redux';
 import store from './redux/Store';
 
@@ -17,7 +17,7 @@ export const config = {
     reduxGeneratorState: 'genState',
   },
   generator: {
-    timeInterval: 1000,
+    timeInterval: 15000,
     range: {
       min: 0.0,
       max: 89.99,

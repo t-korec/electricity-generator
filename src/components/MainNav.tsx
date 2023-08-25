@@ -9,7 +9,7 @@ const MainNav = ({
   setActiveTab: (tab: string) => void;
 }) => {
   return (
-    <div className="flex w-full items-center justify-between">
+    <div className="relative flex w-full items-center justify-between">
       <ul className="flex flex-wrap border-gray-200">
         <li className="mr-2">
           <a
@@ -53,7 +53,7 @@ const MainNav = ({
         <button
           onClick={() => {
             window.location.href = config.paths.signIn;
-            window.localStorage.clear();
+            window.localStorage.setItem(config.localStorage.authKey, 'false');
           }}
         >
           Logout
