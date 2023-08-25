@@ -1,75 +1,61 @@
-import React, { ReactElement, useState } from 'react'
-import logo from './logo.svg'
-import viteLogo from './vite.svg'
-import tailwindLogo from './tailwind.svg'
-import { Link } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import loadable from '@loadable/component';
+import React, { ReactElement, useState } from 'react';
+import { Provider } from 'react-redux';
+import store from './redux/Store';
+
+export const config = {
+  apiToken: import.meta.env.VITE_TOKEN,
+  paths: {
+    signIn: '/',
+    register: '/register',
+    app: '/g',
+    generator: '/g/generator',
+    table: '/g/table',
+  },
+  localStorage: {
+    authKey: 'authorized',
+    reduxGeneratorState: 'genState',
+  },
+  generator: {
+    timeInterval: 1000,
+    range: {
+      min: 0.0,
+      max: 89.99,
+      decimals: 2,
+    },
+  },
+  url: 'https://siemensanalyse.com/TenderProcess2023',
+} as const;
+
+const Login = loadable(() => import('./modules/Login'));
+const Register = loadable(() => import('./modules/Register'));
+const NotFound = loadable(() => import('./modules/NotFound'));
+const Public = loadable(() => import('./layouts/Public'));
+const Private = loadable(() => import('./layouts/Private'));
+const Generator = loadable(() => import('./modules/Generator'));
+const Table = loadable(() => import('./modules/Table'));
 
 function App(): ReactElement {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="p-20 border shadow-xl border-gray-50 rounded-xl">
-      <header>
-        <div className="flex justify-center">
-          <img src={viteLogo} className="w-32 h-32" alt="vite logo" />
-          <img src={logo} className="w-32 h-32" alt="React logo" />
-          <img
-            src={tailwindLogo}
-            className="w-32 h-32"
-            alt="Tailwind CSS logo"
-          />
-        </div>
-        <p className="pb-3 text-2xl">Hello Vite + React + Tailwind CSS!</p>
-        <p>
-          <button
-            className="pt-1 pb-1 pl-2 pr-2 text-sm text-purple-100 bg-purple-400 rounded"
-            onClick={() => setCount((count) => count + 1)}
-          >
-            count is: {count}
-          </button>
-        </p>
-        <p className="pt-3 pb-3">
-          Edit{' '}
-          <code className="border border-1 pl-1 pr-1 pb-0.5 pt-0.5 rounded border-purple-400 font-mono text-sm bg-purple-100 text-purple-900">
-            src/App.tsx
-          </code>{' '}
-          and save to test HMR updates.
-        </p>
-        <p>
-          <Link to="/about" className="text-purple-400 underline">
-            about
-          </Link>
-          {' | '}
-          <a
-            className="text-purple-400 underline"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="text-purple-400 underline"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-          {' | '}
-          <a
-            className="text-purple-400 underline"
-            href="https://tailwindcss.com/docs"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Tailwind CSS Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          {/* Public Routes */}
+          <Route element={<Public />}>
+            <Route path={config.paths.signIn} element={<Login />} />
+            <Route path={config.paths.register} element={<Register />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+          {/* Private Routes */}
+          <Route path={config.paths.app} element={<Private />}>
+            <Route path={config.paths.generator} element={<Generator />} />
+            <Route path={config.paths.table} element={<Table />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+  );
 }
 
-export default App
+export default App;
