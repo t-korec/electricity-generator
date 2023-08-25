@@ -11,7 +11,6 @@ export const config = {
     register: '/register',
     app: '/g',
     generator: '/g/generator',
-    table: '/g/table',
   },
   localStorage: {
     authKey: 'authorized',
@@ -34,7 +33,6 @@ const NotFound = loadable(() => import('./modules/NotFound'));
 const Public = loadable(() => import('./layouts/Public'));
 const Private = loadable(() => import('./layouts/Private'));
 const Generator = loadable(() => import('./modules/Generator'));
-const Table = loadable(() => import('./modules/Table'));
 
 function App(): ReactElement {
   return (
@@ -50,7 +48,6 @@ function App(): ReactElement {
           {/* Private Routes */}
           <Route path={config.paths.app} element={<Private />}>
             <Route path={config.paths.generator} element={<Generator />} />
-            <Route path={config.paths.table} element={<Table />} />
           </Route>
         </Routes>
       </BrowserRouter>

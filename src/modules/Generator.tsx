@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/Store';
-import { setCounter } from './Generator/CounterSlice';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
@@ -11,6 +10,9 @@ import {
   Tooltip,
 } from '@visx/xychart';
 import { config } from '../App';
+import { setCounter } from '../redux/slices/CounterSlice';
+import MainNav from '../components/MainNav';
+import Table from '../components/Table';
 
 const formatDate = (dateToFormat: string | Date) => {
   let date = dateToFormat;
@@ -102,6 +104,7 @@ const Generator = () => {
   const dispatch = useDispatch();
 
   const [intervalId, setIntervalId] = useState(0);
+  const [activeTab, setActiveTab] = useState('tab1');
 
   const handleClick = useCallback(() => {
     if (intervalId) {
@@ -142,31 +145,45 @@ const Generator = () => {
 
   return (
     <div>
-      <LineChart data={data} />
-      <div>
-        Latest value :
-        <>
-          {counter.data.length !== 0
-            ? counter.data[counter.data.length - 1].value
-            : 0}
-        </>
-        <div>
-          Process: <>{intervalId ? 'ON' : 'OFF'}</>
+      <header className="supports-backdrop-blur:bg-white/60 sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur">
+        <div className="container flex h-14 items-center">
+          <MainNav activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
-        <button
-          className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg bg-[#10BFFC] px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
-          onClick={handleClick}
-        >
-          Start generating
-        </button>
+      </header>
+      {activeTab === 'tab1' ? (
         <div>
-          {counter.data.map((d) => (
-            <div key={`id-${d.time}`}>{`${formatDate(d.time)}: ${
-              d.value
-            }`}</div>
-          ))}
+          <LineChart data={data} />
+          <div>
+            Latest value :
+            <>
+              {counter.data.length !== 0
+                ? counter.data[counter.data.length - 1].value
+                : 0}
+            </>
+            <div>
+              Process: <>{intervalId ? 'ON' : 'OFF'}</>
+            </div>
+            <button
+              className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg bg-[#10BFFC] px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+              onClick={handleClick}
+            >
+              Start generating
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <Table
+            data={counter.data.map((d) => {
+              return {
+                time: `${formatDate(d.time)}`,
+                value: d.value,
+                text: 'Generated value',
+              };
+            })}
+          />
+        </div>
+      )}
     </div>
   );
 };
