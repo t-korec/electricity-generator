@@ -28,7 +28,10 @@ run application on localhost:
 yarn dev
 ```
 
+for the deployed app you can use these credentials:  
 
+email: asd@asd.com  
+passwd: asdasd
 
 ### Libraries
 
