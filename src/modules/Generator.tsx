@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/Store';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { config } from '../App';
 import { setCounter } from '../redux/slices/CounterSlice';
 import MainNav from '../components/MainNav';
 import Table from '../components/Table';
 import LineChart from '../components/LineChart';
+import React from 'react';
 
 const formatDate = (dateToFormat: string | Date) => {
   let date = dateToFormat;
@@ -111,7 +112,7 @@ const Generator = () => {
                 className="bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 rounded-lg bg-[#10BFFC] px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
                 onClick={handleClick}
               >
-                Start generating
+                Toggle generation
               </button>
             </div>
           </div>

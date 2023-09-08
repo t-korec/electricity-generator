@@ -36,20 +36,18 @@ Table:
 
 ## Setup
 
-If you don't have yarn installed you need to execute `npm i -g yarn` before setup:
-
-create .env file inside project root directory and set `VITE_TOKEN=''` variable with your API token
+ask for the API token and create .env file inside project root directory and set `VITE_TOKEN='***'` variable with this token
 
 install dependences:
 
 ```bash
-yarn
+npm i
 ```
 
 run application on localhost:
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 ### Deployed app  
