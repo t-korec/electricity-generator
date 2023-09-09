@@ -1,6 +1,6 @@
 ## Task
 
-Create a simple React application that generates random values every 15 seconds and displays them in a graph and table (use redux to store the values), along with the time they were generated. The project should also include login and registration with basic form validation.
+Create a simple React application that generates random values every 1 second and displays them in a graph and table (use redux to store the values), along with the time they were generated. The project should also include login and registration with basic form validation.
 
 Total time spent on the project: 17h (approx 2 man-days)
 
@@ -22,7 +22,7 @@ v0.1-min-bundle
   - visx -> react-frappe-charts/frappe-charts
   - zod -> superstruct
   - react spring -> legend-motion
-  - (update) react table -> tanstack table 
+  - (update) react table -> tanstack table
 
 ## App
 

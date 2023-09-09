@@ -17,7 +17,7 @@ export const config = {
     reduxGeneratorState: 'genState',
   },
   generator: {
-    timeInterval: 15000,
+    timeInterval: 1000,
     range: {
       min: 0.0,
       max: 89.99,
