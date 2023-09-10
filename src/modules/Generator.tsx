@@ -42,7 +42,7 @@ const Generator = () => {
   const counter = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
-  const [intervalId, setIntervalId] = useState(0);
+  const [intervalId, setIntervalId] = useState<number>(0);
   const [activeTab, setActiveTab] = useState('tab1');
 
   const handleClick = useCallback(() => {

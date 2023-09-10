@@ -7,8 +7,8 @@ import {
 } from '@visx/xychart';
 
 const accessors = {
-  xAccessor: (d: any) => d.x,
-  yAccessor: (d: any) => d.y,
+  xAccessor: (d: { x: string; y: number }) => d.x,
+  yAccessor: (d: { x: string; y: number }) => d.y,
 };
 
 const LineChart = ({
@@ -31,7 +31,7 @@ const LineChart = ({
           <AnimatedGrid columns={false} numTicks={4} />
           <AnimatedLineSeries
             dataKey="Line 1"
-            data={data.length === 0 ? [{ x: 0, y: 0 }] : data}
+            data={data.length === 0 ? [{ x: '0', y: 0 }] : data}
             {...accessors}
           />
           <Tooltip
@@ -50,9 +50,13 @@ const LineChart = ({
                 >
                   {tooltipData?.nearestDatum?.key}
                 </div>
-                {accessors.xAccessor(tooltipData?.nearestDatum?.datum)}
+                {tooltipData?.nearestDatum?.datum
+                  ? accessors.xAccessor(tooltipData?.nearestDatum?.datum)
+                  : '0'}
                 {', '}
-                {accessors.yAccessor(tooltipData?.nearestDatum?.datum)}
+                {tooltipData?.nearestDatum?.datum
+                  ? accessors.yAccessor(tooltipData?.nearestDatum?.datum)
+                  : '0'}
               </div>
             )}
           />

@@ -57,7 +57,7 @@ email: asd@asd.com
 passwd: asdasd
 
 or set 'authorized' localstorage variable to 'true'  
-(e.g. authorized:	true)
+(e.g. authorized: true)
 
 ### Libraries
 
@@ -72,4 +72,3 @@ or set 'authorized' localstorage variable to 'true'
 - react-hook-form
 - zod
 - react-spring
-

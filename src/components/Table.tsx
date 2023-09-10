@@ -6,7 +6,15 @@ import {
   useTable,
 } from 'react-table';
 
-const Table = ({ data }: { data: any[] }) => {
+const Table = ({
+  data,
+}: {
+  data: {
+    time: string;
+    value: number;
+    text: string;
+  }[];
+}) => {
   const columns = useMemo(
     () => [
       { Header: 'Time', accessor: 'time' },

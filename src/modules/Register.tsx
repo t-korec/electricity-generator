@@ -70,7 +70,6 @@ const Register = () => {
       return;
     }
 
-    console.log(serverResponse.data);
     setServerError(serverResponse.data);
     if (serverResponse.data.status === ServerStatusCodes.Authorized) {
       window.localStorage.setItem(config.localStorage.authKey, 'true');
